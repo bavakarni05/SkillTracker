@@ -9,13 +9,16 @@ import CareerPaths from './pages/CareerPaths';
 import Recommendations from './pages/Recommendations';
 import Settings from './pages/Settings';
 import RequireAuth from './components/RequireAuth';
+import Auth from './pages/Auth';
 
 function App() {
   return (
     <Routes>
       {/* Public routes */}
-      <Route path="login" element={<Login />} />
-      <Route path="signup" element={<Signup />} />
+      <Route path="auth" element={<Auth />} />
+      {/* Backward-compatible redirects */}
+      <Route path="login" element={<Navigate to="/auth?mode=login" replace />} />
+      <Route path="signup" element={<Navigate to="/auth?mode=signup" replace />} />
 
       {/* Protected routes */}
       <Route element={<RequireAuth />}> 
@@ -30,7 +33,7 @@ function App() {
       </Route>
 
       {/* Fallback */}
-      <Route path="*" element={<Navigate to="/login" replace />} />
+      <Route path="*" element={<Navigate to="/auth" replace />} />
     </Routes>
   );
 }
